@@ -1,25 +1,44 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import styled from '@emotion/styled';
+import LeftNav from './common/LeftNav';
+import TopNav from './common/TopNav';
+import RoutesConfig from './routes';
+import { BrowserRouter } from 'react-router-dom';
+import useLocalStorage from 'use-local-storage';
 
 function App() {
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
+  const MainScreen = styled.div `
+    display: flex; 
+    flex-direction: row; 
+    background-color: var(--background);
+  `
+  const LeftScreen = styled.div`
+    display: flex;
+    flex-direction:column;
+    flex-grow: 1; 
+  `
+
+  const AppContainer = styled.div`
+    height: 100vh; /* Set the height to 100% of the viewport height */
+    overflow: hidden; /* Prevent overflow */
+  `;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <AppContainer className="App" data-theme={theme}>
+        <MainScreen>
+          <LeftNav />
+          <LeftScreen>
+            <TopNav />
+            <RoutesConfig />
+          </LeftScreen>
+        </MainScreen>
+      </AppContainer>
+    </BrowserRouter>
   );
 }
 

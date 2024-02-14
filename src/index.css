@@ -11,3 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+:root {
+  --background: white;
+  --text-primary: black;
+  --text-secondary: black;
+  --textColor: white;
+  --buttonColor: black;
+  --search:white;
+  --hover:#d2d0d0;
+  --CardColor:white;
+}
+[data-theme='dark'] {
+  --background: #202126;
+  --text-primary: white;
+  --text-secondary: #8C8C8C;
+  --textColor: black;
+  --buttonColor: white;
+  --search:#171A1F;
+  --hover: black;
+  --CardColor:#202126;
+}
