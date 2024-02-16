@@ -41,17 +41,17 @@ export interface albumCount {
 export interface songCount {
   songNumber: number
 }
-
+const link = "https://mousi.onrender.com/api/v1/songs";
 // Saga function to fetch songs
 function* workGetSongFetch() {
-  const song: Response = yield call(() => fetch("http://localhost:8080/api/v1/songs"));
+  const song: Response = yield call(() => fetch(`${link}`));
   const songJson: SongResponse = yield call(() => song.json());
   yield put(SongSuccess(songJson));
 }
 
 // Saga function to create a song
 function* workCreateSong(action: ReturnType<typeof createSong>) {
-  const song: Response = yield call(() => fetch("http://localhost:8080/api/v1/songs", {
+  const song: Response = yield call(() => fetch(`${link}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ function* workCreateSong(action: ReturnType<typeof createSong>) {
 
 // Saga function to edit a song
 function* workEditSong(action: ReturnType<typeof editSong>) {
-  const song: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/${action.payload._id}`, {
+  const song: Response = yield call(() => fetch(`${link}/${action.payload._id}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json'
@@ -79,7 +79,7 @@ function* workEditSong(action: ReturnType<typeof editSong>) {
 function* workDeleteSong(action: ReturnType<typeof deleteSong>) {
   try {
     
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/${action.payload}`, {
+    const response: Response = yield call(() => fetch(`${link}/${action.payload}`, {
       method: 'DELETE',
     }));
 
@@ -97,21 +97,21 @@ function* workDeleteSong(action: ReturnType<typeof deleteSong>) {
 
 // Saga function to fetch albums
 function* workGetAlbumsFetch() {
-  const album: Response = yield call(() => fetch("http://localhost:8080/api/v1/songs/albums"));
+  const album: Response = yield call(() => fetch(`${link}/albums`));
   const albumJson: AlbumResponse = yield call(() => album.json());
   yield put(AlbumsSuccess(albumJson));
 }
 
 // Saga function to fetch artists
 function* workGetArtistsFetch() {
-  const artist: Response = yield call(() => fetch("http://localhost:8080/api/v1/songs/artists"));
+  const artist: Response = yield call(() => fetch(`${link}/artists`));
   const artistJson: ArtistResponse = yield call(() => artist.json());
   yield put(ArtistsSuccess(artistJson));
 }
 
 // Saga function to fetch genres
 function* workGetGenerFetch() {
-  const gener: Response = yield call(() => fetch("http://localhost:8080/api/v1/songs/gener"));
+  const gener: Response = yield call(() => fetch(`${link}/gener`));
   const generJson: GenerResponse = yield call(() => gener.json());
   yield put(GenerSuccess(generJson));
 }
@@ -120,7 +120,7 @@ function* workGetGenerFetch() {
 function* fetchAlbumCount(action: ReturnType<typeof fetchAlbumCountRequest>) {
   try {
     const { artist } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artists/${artist}`));
+    const response: Response = yield call(() => fetch(`${link}/artists/${artist}`));
     const data: { numberOfAlbums: number } = yield call(() => response.json());
     yield put(fetchAlbumCountSuccess({ artist, count: data.numberOfAlbums }));
   } catch (error: any) {
@@ -132,7 +132,7 @@ function* fetchAlbumCount(action: ReturnType<typeof fetchAlbumCountRequest>) {
 function* fetchSongCount(action: ReturnType<typeof fetchSongCountRequest>) {
   try {
     const { artist } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistss/${artist}`));
+    const response: Response = yield call(() => fetch(`${link}/artistss/${artist}`));
     const data: { numberOfSongs: number } = yield call(() => response.json());
     yield put(fetchSongCountSuccess({ artist, count: data.numberOfSongs }));
   } catch (error: any) {
@@ -144,11 +144,11 @@ function* fetchSongCount(action: ReturnType<typeof fetchSongCountRequest>) {
 function* fetchArtistDetail(action: ReturnType<typeof fetchArtistDetailRequest>) {
   try {
     const { artist } = action.payload;
-    const response1: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/album/${artist}`));
+    const response1: Response = yield call(() => fetch(`${link}/album/${artist}`));
     const data1: any[] = yield call(() => response1.json());
-    const response2: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artists/${artist}`));
+    const response2: Response = yield call(() => fetch(`${link}/artists/${artist}`));
     const data2: { numberOfAlbums: number } = yield call(() => response2.json());
-    const response3: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistss/${artist}`));
+    const response3: Response = yield call(() => fetch(`${link}/artistss/${artist}`));
     const data3: { numberOfSongs: number } = yield call(() => response3.json());
 
     yield put(fetchArtistDetailSuccess({
@@ -165,7 +165,7 @@ function* fetchArtistDetail(action: ReturnType<typeof fetchArtistDetailRequest>)
 function* fetchSongCountByalbum(action: ReturnType<typeof fetchSongCountByAlbumRequest>) {
   try {
     const { album } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistsss/${album}`));
+    const response: Response = yield call(() => fetch(`${link}/artistsss/${album}`));
     const data: { numberOfSongs: number } = yield call(() => response.json());
     yield put(fetchSongCountByAlbumSuccess({ album, count: data.numberOfSongs }));
   } catch (error: any) {
@@ -177,9 +177,9 @@ function* fetchSongCountByalbum(action: ReturnType<typeof fetchSongCountByAlbumR
 function* fetchlbumDetail(action: ReturnType<typeof fetchAlbumDetailRequest>) {
   try {
     const { album } = action.payload;
-    const response1: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/albumsba/${album}`));
+    const response1: Response = yield call(() => fetch(`${link}/albumsba/${album}`));
     const data1: any[] = yield call(() => response1.json());
-    const response2: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistsss/${album}`));
+    const response2: Response = yield call(() => fetch(`${link}/artistsss/${album}`));
     const data2: { numberOfSongs: number } = yield call(() => response2.json());
 
     yield put(fetchAlbumDetailSuccess({
@@ -195,7 +195,7 @@ function* fetchlbumDetail(action: ReturnType<typeof fetchAlbumDetailRequest>) {
 function* fetchArtistCountByGener(action: ReturnType<typeof fetchArtistCountByGenerRequest>) {
   try {
     const { gener } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistsag/${gener}`));
+    const response: Response = yield call(() => fetch(`${link}/artistsag/${gener}`));
     const data: { numberOfArtists: number } = yield call(() => response.json());
     yield put(fetchArtistCountByGenerSuccess({ gener, count: data.numberOfArtists }));
   } catch (error: any) {
@@ -207,7 +207,7 @@ function* fetchArtistCountByGener(action: ReturnType<typeof fetchArtistCountByGe
 function* fetchAlbumCountByGener(action: ReturnType<typeof fetchAlbumCountByGenerRequest>) {
   try {
     const { gener } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistsa/${gener}`));
+    const response: Response = yield call(() => fetch(`${link}/artistsa/${gener}`));
     const data: { numberOfAlbums: number } = yield call(() => response.json());
     yield put(fetchAlbumCountByGenerSuccess({ gener, count: data.numberOfAlbums }));
   } catch (error: any) {
@@ -219,7 +219,7 @@ function* fetchAlbumCountByGener(action: ReturnType<typeof fetchAlbumCountByGene
 function* fetchSongCountByGener(action: ReturnType<typeof fetchSongCountByGenerRequest>) {
   try {
     const { gener } = action.payload;
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/artistsg/${gener}`));
+    const response: Response = yield call(() => fetch(`${link}/artistsg/${gener}`));
     const data: { numberOfSongs: number } = yield call(() => response.json());
     yield put(fetchSongCountByGenerSuccess({ gener, count: data.numberOfSongs }));
   } catch (error: any) {
@@ -232,7 +232,7 @@ function* workSearch(action: ReturnType<typeof setQuery>) {
   try {
     const { query } = action.payload;
     console.log('Search query:', query);
-    const response: Response = yield call(() => fetch(`http://localhost:8080/api/v1/songs/search/${query}`));
+    const response: Response = yield call(() => fetch(`${link}/search/${query}`));
     const data: SongResponse = yield call(() => response.json());
     yield put(setResults(data)); // Dispatch the setResults action with the search results
   } catch (error) {
