@@ -90,6 +90,9 @@ const Img = styled.img`
   width: 10rem;
   height: 8rem;
   margin-right: 1rem;
+  @media screen and (max-width: 768px) {
+    width: 8rem;
+  }
 `;
 const AlbumName = styled.h1`
   font-size: 1.25rem;
