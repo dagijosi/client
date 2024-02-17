@@ -79,14 +79,14 @@ const TopNav = () => {
 
 const TopScreen = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 1.5rem;
   gap: 1.5rem;
+  justify-content: space-between;
   background-color: var(--background);
-  @media (min-width: 768px) {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  @media (max-width: 600px) {
+    flex-direction: column-reverse;
+    padding:1rem
   }
 `;
 
@@ -95,15 +95,17 @@ const SearchContainer = styled.div`
   flex-direction: column;
   gap: 1rem;
   margin-left: 2.5rem;
-  @media (min-width: 768px) {
-    flex-direction: row;
-    gap: 1rem;
+  @media (max-width: 600px) {
+    margin-left:0
   }
 `;
 
 const ActionContainer = styled.div`
   display: flex;
   gap: 1rem;
+  @media (max-width: 600px) {
+    align-self:flex-end
+  }
 `;
 
 const Button = styled.button`
@@ -128,6 +130,9 @@ const SearchInput = styled.input`
   color: var(--text-primary);
   ::placeholder {
     color: #9ca3af;
+  }
+  @media (max-width: 600px) {
+    width: 13rem;
   }
 `;
 

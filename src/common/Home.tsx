@@ -40,7 +40,7 @@ const HomeContainer = styled.div`
   max-height: calc(100vh - 150px); 
   background-color: var(--background);
   @media screen and (max-width: 768px) {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 `;
 
@@ -51,6 +51,7 @@ const Title = styled.h1`
   text-align: center;
   color: var(--text-secondary);
   @media screen and (max-width: 768px) {
+    text-align: left;
     font-size: 1.5rem;
   }
 `;
@@ -86,8 +87,9 @@ const CardGrid = styled.div`
   justify-items: center;
 
   @media screen and (max-width: 768px) {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
+    max-width: 20rem;
+    grid-template-columns: 1fr;
+    
   }
 `;
 

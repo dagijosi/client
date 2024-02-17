@@ -98,6 +98,10 @@ const Card = styled.div`
     0 2px 4px -1px rgba(0, 0, 0, 0.06);
   max-width: 550px;
   width: 90%;
+  @media (max-width: 600px) {
+    width: 80%;
+    padding: 1.5rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -111,6 +115,9 @@ const Title = styled.h1`
 const InputsContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  @media (max-width: 600px) {
+    flex-direction: column;
+  }
 `;
 
 const InputLabel = styled.label`
@@ -130,6 +137,9 @@ const Input = styled.input`
   border-radius: 0.25rem;
   background-color: var(--search);
   color: var(--text-primary);
+  @media (max-width: 600px) {
+    width: 100%;
+  }
 `;
 
 const ButtonContainer = styled.div`
